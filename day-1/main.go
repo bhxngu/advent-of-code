@@ -20,7 +20,7 @@ func ConvertToInteger(s string) int {
 	return val
 }
 
-func getNumberOfOccurences(i int, slice []int) int {
+func GetNumberOfOccurences(i int, slice []int) int {
 	var count = 0
 
 	for _, v := range slice {
@@ -50,6 +50,10 @@ func main() {
 		slice2 = append(slice2, ConvertToInteger(fields[1]))
 	}
 
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
+
 	sort.Ints(slice1)
 	sort.Ints(slice2)
 
@@ -58,13 +62,9 @@ func main() {
 
 	for i := 0; i < len(slice1); i++ {
 		distance += int(math.Abs(float64(slice2[i] - slice1[i])))
-		similarityScore += getNumberOfOccurences(slice1[i], slice2) * slice1[i]
+		similarityScore += GetNumberOfOccurences(slice1[i], slice2) * slice1[i]
 	}
 
 	fmt.Println("Distance is: " + strconv.Itoa(distance))
 	fmt.Println("Similarity score is: " + strconv.Itoa(similarityScore))
-
-	if err := scanner.Err(); err != nil {
-		panic(err)
-	}
 }
