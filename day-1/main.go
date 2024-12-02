@@ -20,6 +20,18 @@ func ConvertToInteger(s string) int {
 	return val
 }
 
+func getNumberOfOccurences(i int, slice []int) int {
+	var count = 0
+
+	for _, v := range slice {
+		if v == i {
+			count++
+		}
+	}
+
+	return count
+}
+
 func main() {
 	file, err := os.Open("day-1/input.txt")
 	if err != nil {
@@ -42,12 +54,15 @@ func main() {
 	sort.Ints(slice2)
 
 	var distance = 0
+	var similarityScore = 0
 
 	for i := 0; i < len(slice1); i++ {
 		distance += int(math.Abs(float64(slice2[i] - slice1[i])))
+		similarityScore += getNumberOfOccurences(slice1[i], slice2) * slice1[i]
 	}
 
-	fmt.Println(distance)
+	fmt.Println("Distance is: " + strconv.Itoa(distance))
+	fmt.Println("Similarity score is: " + strconv.Itoa(similarityScore))
 
 	if err := scanner.Err(); err != nil {
 		panic(err)
